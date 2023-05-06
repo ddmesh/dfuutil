@@ -4,6 +4,7 @@
  * Copyright 2007-2008 by OpenMoko, Inc.
  * Copyright 2010-2016 Tormod Volden and Stefan Schmidt
  * Copyright 2013-2014 Hans Petter Selasky <hps@bitfrost.no>
+ * Copyright 2023 Stephan Enderlein <stephan@freifunk-dresden.de>
  *
  * Written by Harald Welte <laforge@openmoko.org>
  *

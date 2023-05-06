@@ -1,5 +1,6 @@
 # dfu-util
 
+**Licensed**: gpl-3.0 / GNU General Public License v3.0
 This version extends and improves the dfu-util v0.9 with following:
 - fix dfu-util stm32 chip detection to avoid 35s timeout for gigadevices
 - add new options to overwrite number of flash sectors/pages and their size.
