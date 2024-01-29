@@ -4,7 +4,7 @@
  * Copyright 2007-2008 by OpenMoko, Inc.
  * Copyright 2010-2016 Tormod Volden and Stefan Schmidt
  * Copyright 2013-2014 Hans Petter Selasky <hps@bitfrost.no>
- * Copyright 2023 Stephan Enderlein <stephan@freifunk-dresden.de>
+ * Copyright 2023-2024 Stephan Enderlein <stephan@freifunk-dresden.de>
  *
  * Written by Harald Welte <laforge@openmoko.org>
  *
@@ -162,8 +162,7 @@ static int parse_number(char *str, char *nmb)
 
 static void help(void)
 {
-  fprintf(stderr, PACKAGE_STRING "\n\n");
-	fprintf(stderr, "Usage: dfu-util [options] ...\n"
+	fprintf(stderr, "\n\nUsage: dfu-util [options] ...\n\n"
 		"  -h --help\t\t\tPrint this help message\n"
 		"  -V --version\t\t\tPrint the version number\n"
 		"  -v --verbose\t\t\tPrint verbose debug statements\n"
@@ -172,7 +171,8 @@ static void help(void)
 		"  -E --detach-delay seconds\tTime to wait before reopening a device after detach\n"
 		"  -d --device <vendor>:<product>[,<vendor_dfu>:<product_dfu>]\n"
 		"\t\t\t\tSpecify Vendor/Product ID(s) of DFU device\n"
-		"  -p --path <bus-port. ... .port>\tSpecify path to DFU device\n"
+		"  -p --path <bus-port. ... .port>\n"
+		"\t\t\t\tSpecify path to DFU device\n"
 		"  -c --cfg <config_nr>\t\tSpecify the Configuration of DFU device\n"
 		"  -i --intf <intf_nr>\t\tSpecify the DFU Interface number\n"
 		"  -S --serial <serial_string>[,<serial_string_dfu>]\n"
@@ -199,10 +199,9 @@ static void print_version(void)
 {
 	printf(PACKAGE_STRING "\n\n");
 	printf("Copyright 2005-2009 Weston Schmidt, Harald Welte and OpenMoko Inc.\n"
-	       "Copyright 2010-2016 Tormod Volden and Stefan Schmidt\n"
-				 "Modified by Stephan Enderlein 2023\n"
-	       "This program is Free Software and has ABSOLUTELY NO WARRANTY\n"
-	       "Please report bugs to " PACKAGE_BUGREPORT "\n\n");
+				"Copyright 2010-2016 Tormod Volden and Stefan Schmidt\n"
+				"Copyright 2023-2024 Stephan Enderlein\n"
+				"This program is Free Software and has ABSOLUTELY NO WARRANTY\n");
 }
 
 static struct option opts[] = {
@@ -355,7 +354,6 @@ int main(int argc, char **argv)
 	}
 
 	if (mode == MODE_NONE) {
-		fprintf(stderr, "You need to specify one of -D or -U\n");
 		help();
 	}
 

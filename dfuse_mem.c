@@ -3,7 +3,7 @@
  * following the ST DfuSe 1.1a specification.
  *
  * Copyright 2011-2014 Tormod Volden <debian.tormod@gmail.com>
- * Copyright 2023 Stephan Enderlein <stephan@freifunk-dresden.de>
+ * Copyright 2023-2024 Stephan Enderlein <stephan@freifunk-dresden.de>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by

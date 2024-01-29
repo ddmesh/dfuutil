@@ -6,8 +6,8 @@
 # include "config.h"
 #else
 # define PACKAGE "dfu-util"
-# define PACKAGE_VERSION "0.9-msvc"
-# define PACKAGE_STRING "dfu-util 0.9-msvc"
+# define PACKAGE_VERSION "1.0"
+# define PACKAGE_STRING "dfu-util 1.0 (ddmesh)"
 # define PACKAGE_BUGREPORT "http://sourceforge.net/p/dfu-util/tickets/"
 # include <io.h>
 #endif /* HAVE_CONFIG_H */

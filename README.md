@@ -1,14 +1,18 @@
 # dfu-util
 
 **Licensed**: gpl-3.0 / GNU General Public License v3.0
-This version extends and improves the dfu-util v0.9 with following:
+Copyright 2005-2009 Weston Schmidt, Harald Welte and OpenMoko Inc.
+Copyright 2010-2016 Tormod Volden and Stefan Schmidt
+Copyright 2023 Stephan Enderlein
+This program is Free Software and has ABSOLUTELY NO WARRANTY
+
+This version v1.0 (ddmesh) extends and improves the previous version dfu-util v0.9 with following:
 - fix dfu-util stm32 chip detection to avoid 35s timeout for gigadevices
 - add new options to overwrite number of flash sectors/pages and their size.
   This is needed for Gigadevices MCU that signal invalid values via USB descriptors.
-	This allows only erase/flash specific pages instead of running a mass erase.
+	This allows erase/flash specific pages instead of running a mass erase.
 - add progress bar also when erasing flash pages to give user a feedback.
-- replace complicated make/build system with simple makefile (testetd on ubuntu 22.04)
-
+- replace complicated make/build system with simple makefile (tested on ubuntu 22.04)
 
 
 ## Building binaries
@@ -19,7 +23,7 @@ When using crosscompiling the variable BUILD_ROOT must point to build root
 **Compiling**<br/>
  <pre>
  sudo apt install libusb-dev libusb-1.0-0-dev
- make Makefile
+ make
  </pre>
 
 ## Usage
