@@ -27,45 +27,67 @@ When using crosscompiling the variable BUILD_ROOT must point to build root
  </pre>
 
 ## Usage
-~~~
-> dfu-util -h
+~~~sh
+> ./dfu-util
+dfu-util 1.1 (ddmesh)
+
+Copyright 2005-2009 Weston Schmidt, Harald Welte and OpenMoko Inc.
+Copyright 2010-2016 Tormod Volden and Stefan Schmidt
+Copyright 2023-2024 Stephan Enderlein
+This program is Free Software and has ABSOLUTELY NO WARRANTY
+
 Usage: dfu-util [options] ...
-  -h --help			              Print this help message
-  -V --version			          Print the version number
-  -v --verbose			          Print verbose debug statements
-  -l --list			              List currently attached DFU capable devices
-  -e --detach			            Detach currently attached DFU capable devices
-  -E --detach-delay seconds	  Time to wait before reopening a device after detach
+
+  -h --help                     Print this help message
+  -V --version                  Print the version number
+  -v --verbose                  Print verbose debug statements
+  -l --list                     List currently attached DFU capable devices
+  -e --detach                   Detach currently attached DFU capable devices
+  -E --detach-delay seconds     Time to wait before reopening a device after detach
   -d --device <vendor>:<product>[,<vendor_dfu>:<product_dfu>]
-                              Specify Vendor/Product ID(s) of DFU device
+                                Specify Vendor/Product ID(s) of DFU device
   -p --path <bus-port. ... .port>
-                              Specify path to DFU device
-  -c --cfg <config_nr>		    Specify the Configuration of DFU device
-  -i --intf <intf_nr>		      Specify the DFU Interface number
+                                Specify path to DFU device
+  -c --cfg <config_nr>          Specify the Configuration of DFU device
+  -i --intf <intf_nr>           Specify the DFU Interface number
   -S --serial <serial_string>[,<serial_string_dfu>]
-                              Specify Serial String of DFU device
-  -a --alt <alt>		          Specify the Altsetting of the DFU Interface
-                              by name or by number
-  -t --transfer-size <size>	  Specify the number of bytes per USB Transfer
-  -U --upload <file>		      Read firmware from device into <file>
-  -Z --upload-size <bytes>	  Specify the expected upload size in bytes
-  -D --download <file>		    Write firmware from <file> into device
-  -R --reset			            Issue USB Reset signalling once we are finished
-  -s --dfuse-address <address>	ST DfuSe mode, specify target address for
-                              raw file download or upload. Not applicable for
-                              DfuSe file (.dfu) downloads
-  -N --flash-sectors <number>	Specify the number of flash sectors
-  -P --flash-page_size <size>	Specify the size of one flash page in bytes
+                                Specify Serial String of DFU device
+  -a --alt <alt>                Specify the Altsetting of the DFU Interface
+                                by name or by number
+  -t --transfer-size <size>     Specify the number of bytes per USB Transfer
+  -U --upload <file>            Read firmware from device into <file>
+  -Z --upload-size <bytes>      Specify the expected upload size in bytes
+  -D --download <file>          Write firmware from <file> into device
+  -R --reset                    Issue USB Reset signalling once we're finished
+  -s --dfuse-address <address>  ST DfuSe mode, specify target address for
+                                raw file download or upload.
+
+                download: address[:force][:leave][:unprotect][:mass-erase|no-erase][:<byte number>]
+                upload:   address[:force][:leave][:<byte number>]
+
+  -N --flash-sectors <number>   Specify the number of flash sectors
+  -P --flash-page_size <size>   Specify the size of one flash page in bytes
+
+Examples:
+  # read 128044 bytes from flash address 0x08000000. Use alt to select dfu device
+  dfu-util -v -U dfu.bin -a 0 -s 0x08000000:128044
+
+  # overwrite number of sectors/page size, mass-erase (fast), flash and omit 'leave' to stay in dfu mode
+  dfu-util -a 0 -s 0x08000000:mass-erase:force -N 128 -P 1024 -D firmware.bin
+
+  # flash data.bin at specific address. no-erase prevents erasing sector
+  dfu-util -a 0 -s 0x0801fc00:leave:no-erase -N 128 -P 1024 -D data.bin
 ~~~
 
 Newly added options are _-N_ and _-P_ to overwrite any information of USB descriptors.
 
-Example 1:
+Example 1 (flash/download):
 ~~~sh
+# overwrite number of sectors and and page size,
 dfu-util -a 0 -s 0x08000000:leave -N 128 -P 1024 -D firmware.bin
 ~~~
 
-Example 2:
+Example 2 (flash only parts):
 ~~~sh
 # extract first 32kbyte of image
 dd if=complete_image.bin of=firmware.bin bs=1024 count=32
@@ -73,9 +95,15 @@ dd if=complete_image.bin of=firmware.bin bs=1024 count=32
 # extract last 1k sector  (config)
 dd if=complete_image.bin of=config.bin bs=1024 count=1 skip=127
 
-# mass-erase (very fast) and flash 32kbyte only and omit 'leave' to stay in dfu mode
+# mass-erase (fast), flash and omit 'leave' to stay in dfu mode
 dfu-util -a 0 -s 0x08000000:mass-erase:force -N 128 -P 1024 -D firmware.bin
 
-# flash config at specific flash address (last 1k sector) and leave dfu (starts application)
+# flash config at specific flash address (last 1k sector) and leave dfu mode(which starts application)
 dfu-util -a 0 -s 0x0801fc00:leave:no-erase -N 128 -P 1024 -D config.bin
+~~~
+
+Example 3 (read from MCU)
+~~~sh
+# read 128044 bytes from flash address 0x08000000
+dfu-util -v -U dfu.bin -a 0 -s 0x08000000:128044
 ~~~

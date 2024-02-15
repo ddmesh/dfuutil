@@ -56,7 +56,7 @@
 #define PACKAGE_NAME "dfu-util"
 
 /* Define to the full name and version of this package. */
-#define PACKAGE_STRING "dfu-util 1.0 (ddmesh)"
+#define PACKAGE_STRING "dfu-util 1.1 (ddmesh)"
 
 /* Define to the one symbol short name of this package. */
 #define PACKAGE_TARNAME "dfu-util"

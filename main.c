@@ -162,7 +162,7 @@ static int parse_number(char *str, char *nmb)
 
 static void help(void)
 {
-	fprintf(stderr, "\n\nUsage: dfu-util [options] ...\n\n"
+	fprintf(stderr, "\nUsage: dfu-util [options] ...\n\n"
 		"  -h --help\t\t\tPrint this help message\n"
 		"  -V --version\t\t\tPrint the version number\n"
 		"  -v --verbose\t\t\tPrint verbose debug statements\n"
@@ -185,13 +185,21 @@ static void help(void)
 		"  -D --download <file>\t\tWrite firmware from <file> into device\n"
 		"  -R --reset\t\t\tIssue USB Reset signalling once we're finished\n"
 		"  -s --dfuse-address <address>\tST DfuSe mode, specify target address for\n"
-		"\t\t\t\traw file download or upload. Not applicable for\n"
-		"\t\t\t\tDfuSe file (.dfu) downloads\n"
+		"\t\t\t\traw file download or upload. \n\n"
+		"\t\tdownload: address[:force][:leave][:unprotect][:mass-erase|no-erase][:<byte number>]\n"
+		"\t\tupload:   address[:force][:leave][:<byte number>]\n\n"
 		);
 
 		fprintf(stderr, "  -N --flash-sectors <number>\tSpecify the number of flash sectors\n");
-    fprintf(stderr, "  -P --flash-page_size <size>\tSpecify the size of one flash page in bytes\n");
+    fprintf(stderr, "  -P --flash-page_size <size>\tSpecify the size of one flash page in bytes\n\n");
 
+		fprintf(stderr, "Examples:\n"
+		"  # read 128044 bytes from flash address 0x08000000. Use alt to select dfu device\n"
+		"  dfu-util -v -U dfu.bin -a 0 -s 0x08000000:128044\n\n"
+		"  # overwrite number of sectors/page size, mass-erase (fast), flash and omit 'leave' to stay in dfu mode\n"
+		"  dfu-util -a 0 -s 0x08000000:mass-erase:force -N 128 -P 1024 -D firmware.bin\n\n"
+		"  # flash data.bin at specific address. no-erase prevents erasing sector\n"
+		"  dfu-util -a 0 -s 0x0801fc00:leave:no-erase -N 128 -P 1024 -D data.bin\n\n");
 	exit(EX_USAGE);
 }
 
